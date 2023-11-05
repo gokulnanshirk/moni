@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <!-- Add Bootstrap CSS from CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./profileformstyles.css">
+    <style>
+        /* Custom styles for the navbar */
+        .navbar {
+            background-color: #35495e;
+            /* Change the background color */
+            color: #fff;
+            /* Change the text color */
+        }
+
+        /* Custom styles for the form container */
+        .form-container {
+            background-color: #ecf0f1;
+            /* Change the background color */
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark justify-content-center">
+        <a class="navbar-brand" href="#">Registration Form</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+    <!-- Form -->
+    <div class="container mt-5 form-container">
+        <div class="row justify-content-left">
+            <div class="col-md-6">
+                <div class="row">
+
+                    <form style="width:100%">
+                        <div class="form-group col-md-12">
+                            <label for="name">User Id</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter Mobile No / Email">
+                            <div id="userIdHelp" class="form-text text-danger"></div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                            <div id="passwordHelp" class="form-text text-danger"></div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" id="email" placeholder="Email">
+                            <div id="emailHelp" class="form-text text-danger"></div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="taddress">Temporary Address</label>
+                            <textarea class="form-control" id="taddress" rows="2"
+                                placeholder="Temporary Address"></textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="paddress">Permanent Address</label>
+
+                            <div class="row">
+
+                                <div class="form-group col-md-6 address-group">
+                                    <label for="flatno">Flat No</label>
+                                    <input type="text" class="form-control" id="flatno" placeholder="Flat No">
+                                </div>
+                                <div class="form-group col-md-6 address-group">
+                                    <label for="floor">Floor</label>
+                                    <select class="form-control" id="floor">
+                                        <option value="0">Select Floor</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6 address-group">
+                                    <label for="pincode">Pincode</label>
+                                    <input type="text" class="form-control" id="pincode" placeholder="Pincode">
+                                </div>
+                                <div class="form-group col-md-6 address-group">
+                                    <label for="landmark">Landmark</label>
+                                    <input type="text" class="form-control" id="landmark" placeholder="Landmark">
+                                </div>
+                                <div class="form-group col-md-6 address-group">
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city" placeholder="City">
+                                </div>
+                                <div class="form-group col-md-6 address-group">
+                                    <label for="state">State</label>
+                                    <input type="text" class="form-control" id="state" placeholder="State">
+                                </div>
+                                <div class="form-group col-md-6 address-group">
+                                    <label for="country">Country</label>
+                                    <input type="text" class="form-control" id="country" placeholder="Country">
+                                </div>
+                                <div class="col-md-6">
+                                    <form enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <label for="profileImage">Profile Image</label>
+                                            <input type="file" class="form-control-file" id="profileImage"
+                                                accept="image/*">
+                                        </div>
+                                        <div class="form-group">
+                                            <img id="thumbnail" class="thumbnail" src="#" alt="Thumbnail">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div style="justify-content: center;">
+
+                            <button type="button" onclick="saveProfileData()" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <h5>User Details</h5>
+
+                <div id="profileListContainer">
+
+                </div>
+
+                <script>
+
+                    var profileData = JSON.parse(localStorage.getItem('profileData')) || [];
+
+                    const updateDocumentWithProfile = () => {
+
+                        let container = document.getElementById('profileListContainer')
+                        let container_childs = ""
+                        profileData.forEach(function (item, index) {
+                            const cardId = `card-${index}`;
+                            container_childs = container_childs + `
+                        <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="${item.pic}" class="card-img" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.email}</h5>
+                                <p class="card-text">${item.temporaryAddress}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    `;
+                        });
+
+                        container.innerHTML = container_childs
+                    }
+
+                    updateDocumentWithProfile()
+
+                    const saveProfileData = () => {
+                        const userId = document.getElementById('name').value;
+                        const email = document.getElementById('email').value;
+                        const temporaryAddress = document.getElementById('taddress').value;
+                        const profileImage = document.getElementById('thumbnail').src; // Assuming this is the URL of the image
+                        const password = document.getElementById('password').value;
+
+                        // Validate User Id
+                        if (!isValidUserId(userId)) {
+                            document.getElementById('userIdHelp').textContent = 'Please enter a valid mobile number or email.';
+                            return;
+                        } else {
+                            document.getElementById('userIdHelp').textContent = '';
+                        }
+
+                        // Validate email
+                        if (!isValidEmail(email)) {
+                            document.getElementById('emailHelp').textContent = 'Please enter a valid email.';
+                            return;
+                        } else {
+                            document.getElementById('emailHelp').textContent = '';
+                        }
+
+                        // Validate password
+                        if (!isValidPassword(password)) {
+                            document.getElementById('passwordHelp').textContent = 'Password must contain one uppercase letter, one special character, and be alphanumeric.';
+                            return;
+                        } else {
+                            document.getElementById('passwordHelp').textContent = '';
+                        }
+
+                        // Check if required fields are filled
+                        if (email && temporaryAddress) {
+                            profileData.unshift({
+                                email: email,
+                                temporaryAddress: temporaryAddress,
+                                pic: profileImage
+                            });
+
+                            // Clear the form inputs after saving
+                            document.getElementById('email').value = '';
+                            document.getElementById('taddress').value = '';
+                            document.getElementById('profileImage').value = '';
+                            document.getElementById('password').value = '';
+                            document.getElementById('name').value = '';
+                            document.getElementById('thumbnail').src = ''; // Assuming this is the URL of the image
+
+                            updateDocumentWithProfile();
+                        } else {
+                            alert('Email and Temporary Address are required fields.');
+                        }
+                    }
+
+                    function isValidEmail(email) {
+                        // Implement email validation logic (e.g., regex pattern)
+                        return /\S+@\S+\.\S+/.test(email);
+                    }
+
+                    function isValidPassword(password) {
+                        // Implement password validation logic
+                        // Password must contain one uppercase letter, one special character, and be alphanumeric
+                        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.*[0-9a-zA-Z]).{3,}$/;
+                        return passwordRegex.test(password);
+                    }
+
+                    function isValidUserId(userId) {
+                        // Implement User Id validation logic
+                        // User Id must be a valid mobile number or a valid email
+                        const mobileRegex = /^[0-9]{10}$/; // Adjust the regex pattern for your mobile number format
+                        const emailRegex = /\S+@\S+\.\S+/; // Basic email regex pattern
+
+                        return mobileRegex.test(userId) || emailRegex.test(userId);
+                    }
+
+                </script>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and jQuery from CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // JavaScript to display the image thumbnail
+        const profileImageInput = document.getElementById('profileImage');
+        const thumbnail = document.getElementById('thumbnail');
+        thumbnail.src = 'https://static.thenounproject.com/png/1156517-200.png'
+        thumbnail.style.display = 'none'
+
+        profileImageInput.addEventListener('change', function () {
+            if (profileImageInput.files && profileImageInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    thumbnail.style.display = 'block'
+                    thumbnail.src = e.target.result;
+                    // document.getElementById('profileImage').value = e.target.result
+                };
+
+                reader.readAsDataURL(profileImageInput.files[0]);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
