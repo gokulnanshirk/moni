@@ -1,0 +1,12 @@
+.form-container {
+    background-color: #ecf0f1; /* Change the background color */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Style for the thumbnail image */
+.thumbnail {
+    max-width: 100%;
+    max-height: 100px;
+    margin-top: 10px;
+}
