@@ -78,10 +78,10 @@
                                     <label for="floor">Floor</label>
                                     <select class="form-control" id="floor">
                                         <option value="0">Select Floor</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
+                                        <option value="1st Floor">1</option>
+                                        <option value="2nd Floor">2</option>
+                                        <option value="3rd Floor">3</option>
+                                        <option value="4th Floor">4</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6 address-group">
@@ -156,7 +156,8 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">${item.email}</h5>
-                                <p class="card-text">${item.temporaryAddress}</p>
+                                <p class="card-text">Temporary Address : ${item.temporaryAddress}</p>
+                                <p class="card-text">Permanent Address : ${item.flatno}, ${item.floor}, ${item.landmark}, ${item.city}, ${item.state}, ${item.country} ${item.pincode}</p>
                             </div>
                         </div>
                     </div>
@@ -175,6 +176,17 @@
                         const temporaryAddress = document.getElementById('taddress').value;
                         const profileImage = document.getElementById('thumbnail').src; // Assuming this is the URL of the image
                         const password = document.getElementById('password').value;
+
+                        const flatno = document.getElementById('flatno').value;
+                        const floor = document.getElementById('floor').value;
+                        const pincode = document.getElementById('pincode').value;
+                        const landmark = document.getElementById('landmark').value;
+
+                        const city = document.getElementById('city').value;
+                        const state = document.getElementById('state').value;
+                        const country = document.getElementById('country').value;
+
+
 
                         // Validate User Id
                         if (!isValidUserId(userId)) {
@@ -205,7 +217,15 @@
                             profileData.unshift({
                                 email: email,
                                 temporaryAddress: temporaryAddress,
-                                pic: profileImage
+                                pic: profileImage,
+                                flatno,
+                                floor,
+                                pincode,
+                                landmark,
+                                city,
+                                state,
+                                country
+
                             });
 
                             // Clear the form inputs after saving
@@ -214,6 +234,15 @@
                             document.getElementById('profileImage').value = '';
                             document.getElementById('password').value = '';
                             document.getElementById('name').value = '';
+
+                            document.getElementById('flatno').value = '';
+                            document.getElementById('floor').value = '0';
+                            document.getElementById('pincode').value = '';
+                            document.getElementById('landmark').value = '';
+                            document.getElementById('city').value = '';
+                            document.getElementById('state').value = '';
+                            document.getElementById('country').value = '';
+
                             document.getElementById('thumbnail').src = ''; // Assuming this is the URL of the image
 
                             updateDocumentWithProfile();
